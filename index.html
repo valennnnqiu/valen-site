@@ -9,6 +9,11 @@
 <meta property="og:image" content="img/crowd.jpg">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <title>VALEN</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XVY5K869VZ"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-XVY5K869VZ');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400..800&family=Funnel+Sans:wght@400..700&display=swap">
 <style>
@@ -618,6 +623,17 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
     }
   })();
 
+  /* analytics: click tracking */
+  function track(n,p){try{gtag('event',n,p||{});}catch(e){}}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a) return;
+    var h=a.getAttribute('href');
+    if(a.classList.contains('disc')) return track('play_mix',{link_url:h});
+    if(h.indexOf('soundcloud.com')>-1) return track('click_soundcloud',{link_url:h});
+    if(h.indexOf('instagram.com')>-1) return track('click_instagram',{link_url:h});
+    if(a.closest('.gl li')&&/^https?:/.test(h)) return track('click_tickets',{link_url:h});
+  });
+  document.getElementById('copy').addEventListener('click',function(){track('copy_email');});
   /* booking form: sends through Web3Forms once FORM_KEY is filled in */
   var FORM_KEY='09115eb9-3479-4c16-a078-6aebbc02b67a';
   var form=document.getElementById('form'), sent=document.getElementById('sent'), sendBtn=form.querySelector('.send');
@@ -634,7 +650,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
     fd.append('from_name','VALEN website');
     sendBtn.disabled=true; sendBtn.textContent='Sending…';
     fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){
-      if(d&&d.success){form.reset();say('Request sent. I’ll reply within 48 hours.');}
+      if(d&&d.success){track('booking_submit');form.reset();say('Request sent. I’ll reply within 48 hours.');}
       else{say('That didn’t send. Email valen.jy.qiu@gmail.com directly and I’ll get back to you.');}
     }).catch(function(){say('That didn’t send. Check your connection, or email valen.jy.qiu@gmail.com directly.');})
     .then(function(){sendBtn.disabled=false;sendBtn.textContent='Send request';});
