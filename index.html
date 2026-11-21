@@ -70,7 +70,7 @@ button{font:inherit;color:inherit}
 .meta .bpm{font-size:15px;font-weight:600}
 .deck.a .meta .bpm{color:var(--white)}
 .deck h2{font-family:var(--display);margin:0;font-size:clamp(34px,10.5cqi,92px);line-height:.92;font-weight:600;letter-spacing:-.04em}
-.deck .say{margin:0;max-width:34ch;font-size:clamp(16px,3.2cqi,19px);line-height:1.4}
+.deck .say{margin:0;max-width:56ch;font-size:clamp(16px,3.2cqi,19px);line-height:1.4}
 .deck.a .say{color:#E4E7FF}
 .gl{list-style:none;margin:0;padding:0}
 .gl li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 16px;padding-block:11px;border-top:1px solid}
@@ -449,7 +449,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
           <h2>Open format</h2>
           <p class="say">I play Top 40, House, Bounce, Hip Hop and UKG for clubs, brand events and parties. I read the room and keep everyone moving.</p>
           <ul class="gl">
-            <li data-date="2026-11-20"><span class="n">IDK Social Bar</span><span class="h">Monthly residency</span></li>
+            <li data-date="2026-11-20"><span class="n">IDK Social Bar</span><span class="h">Recurring</span></li>
             <li><span class="n">AMPM</span><span class="h">Club</span></li>
             <li><span class="n">NEST</span><span class="h">Club</span></li>
             <li><span class="n">Haidilao DJ Night</span><span class="h">Brand event</span></li>
@@ -458,7 +458,6 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
             <li data-img="img/friction.jpg"><span class="n">Friction Sundays</span><span class="h">Club</span></li>
           </ul>
           <a class="cue" href="#book" data-type="club">Book a club or event set</a>
-          <p class="b2b-line">DJ and want to B2B? <a href="#book" id="b2b-link">Message me</a></p>
         </div>
       </div>
 
@@ -639,7 +638,6 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
     if(a.closest('.gl li')&&/^https?:/.test(h)) return track('click_tickets',{link_url:h});
   });
   document.getElementById('copy').addEventListener('click',function(){track('copy_email');});
-  var b2bl=document.getElementById('b2b-link');if(b2bl)b2bl.addEventListener('click',function(){var c=document.getElementById('f-b2b');if(c)c.checked=true;track('click_b2b');});
   /* booking form: sends through Web3Forms once FORM_KEY is filled in */
   var FORM_KEY='09115eb9-3479-4c16-a078-6aebbc02b67a';
   var form=document.getElementById('form'), sent=document.getElementById('sent'), sendBtn=form.querySelector('.send');
