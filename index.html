@@ -392,7 +392,9 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
 .f-bot{border-top:0;padding-top:0}
 @media (max-width:860px){.deck .inner,.deck.idle .inner{opacity:1!important;pointer-events:auto!important}.deck.idle{cursor:auto}}
 .b2b-line{margin:-12px 0 0;font-size:15px;color:var(--mute-on-paper)}.b2b-line a{color:var(--ink);text-underline-offset:3px}.b2b-line a:hover{color:var(--flare-ink)}
-.bk .chk{display:flex;align-items:center;gap:12px;font-size:16px;color:var(--paper);cursor:pointer}.bk .chk input{width:20px;height:20px;margin:0;accent-color:var(--sun);flex:none}
+#book{padding-bottom:72px!important}#b2b{padding-block:72px 110px!important}
+.b2b-head{grid-column:1 / span 5;display:flex;flex-direction:column;gap:16px}.b2b-head p{margin:0;max-width:30ch;font-size:19px;line-height:1.4;color:var(--mute-on-paper)}
+@media (max-width:860px){.b2b-head{grid-column:1 / -1}}
 </style>
 </head>
 <body>
@@ -503,19 +505,34 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
   <section class="bk gut" id="book" aria-labelledby="bkh">
     <div class="grid">
       <h3 id="bkh">Book a date</h3>
-      <form id="form" novalidate>
+      <form id="form" novalidate data-subject="Booking request from ">
         <div class="f"><label class="l" for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
         <div class="f"><label class="l" for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="f"><label class="l" for="f-date">Date</label><input id="f-date" name="date" type="date"></div>
-        <div class="f"><label class="l" for="f-budget">Budget (CAD)</label>
-          <select id="f-budget" name="budget"><option>Under $300</option><option>$300 to $600</option><option>$600 to $1,000</option><option>$1,000+</option><option>Not sure yet</option></select>
+        <div class="f"><label class="l" for="f-date">Date</label><input id="f-date" name="date" type="date" required></div>
+        <div class="f"><label class="l" for="f-budget">Budget (CAD), optional</label>
+          <select id="f-budget" name="budget"><option value="">Choose</option><option>Under $300</option><option>$300 to $600</option><option>$600 to $1,000</option><option>$1,000+</option><option>Not sure yet</option></select>
         </div>
-        <div class="f full"><label class="l" for="f-venue">Venue and city</label><input id="f-venue" name="venue" type="text"></div>
-        <label class="f full chk"><input type="checkbox" name="b2b" id="f-b2b" value="Yes"><span>I’m a DJ and want to B2B</span></label>
-        <div class="f full"><label class="l" for="f-msg">Tell me about the night</label><textarea id="f-msg" name="message"></textarea>
+        <div class="f full"><label class="l" for="f-venue">Venue and city, optional</label><input id="f-venue" name="venue" type="text"></div>
+        <div class="f full"><label class="l" for="f-msg">Tell me about the night</label><textarea id="f-msg" name="message" required></textarea>
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
         <button class="send" type="submit">Send request</button>
-        <p class="sent" id="sent" role="status" hidden></p>
+        <p class="sent" role="status" hidden></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- B2B -->
+  <section class="bk gut" id="b2b" aria-labelledby="b2bh">
+    <div class="grid">
+      <div class="b2b-head"><h3 id="b2bh">B2B</h3><p>DJ and want to play a set together? Send me a message.</p></div>
+      <form id="form2" novalidate data-subject="B2B request from ">
+        <div class="f"><label class="l" for="g-name">Name</label><input id="g-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="f"><label class="l" for="g-email">Email</label><input id="g-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="f full"><label class="l" for="g-link">Your mixes or Instagram</label><input id="g-link" name="link" type="text" required></div>
+        <div class="f full"><label class="l" for="g-msg">Anything else, optional</label><textarea id="g-msg" name="message"></textarea>
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
+        <button class="send" type="submit">Send</button>
+        <p class="sent" role="status" hidden></p>
       </form>
     </div>
   </section>
@@ -640,24 +657,27 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
   document.getElementById('copy').addEventListener('click',function(){track('copy_email');});
   /* booking form: sends through Web3Forms once FORM_KEY is filled in */
   var FORM_KEY='09115eb9-3479-4c16-a078-6aebbc02b67a';
-  var form=document.getElementById('form'), sent=document.getElementById('sent'), sendBtn=form.querySelector('.send');
-  function say(t){sent.textContent=t;sent.hidden=false;}
-  form.addEventListener('submit',function(e){
-    e.preventDefault();
-    var nm=document.getElementById('f-name'), em=document.getElementById('f-email');
-    if(!nm.value.trim()){say('Add your name so I know who to reply to.');nm.focus();return;}
-    if(!em.value.trim()||!em.checkValidity()){say('Add an email address I can reply to.');em.focus();return;}
-    if(FORM_KEY.indexOf('YOUR_')===0){say('Preview only. Once the form key is added, this goes straight to valen.jy.qiu@gmail.com.');return;}
-    var fd=new FormData(form);
-    fd.append('access_key',FORM_KEY);
-    fd.append('subject','Booking request from '+nm.value.trim());
-    fd.append('from_name','VALEN website');
-    sendBtn.disabled=true; sendBtn.textContent='Sending…';
-    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){
-      if(d&&d.success){track('booking_submit');form.reset();say('Request sent. I’ll reply within 48 hours.');}
-      else{say('That didn’t send. Email valen.jy.qiu@gmail.com directly and I’ll get back to you.');}
-    }).catch(function(){say('That didn’t send. Check your connection, or email valen.jy.qiu@gmail.com directly.');})
-    .then(function(){sendBtn.disabled=false;sendBtn.textContent='Send request';});
+  [].forEach.call(document.querySelectorAll('.bk form'),function(form){
+    var sent=form.querySelector('.sent'), sendBtn=form.querySelector('.send'), label=sendBtn.textContent;
+    function say(t){sent.textContent=t;sent.hidden=false;}
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var nm=form.elements.name, em=form.elements.email;
+      if(!nm.value.trim()){say('Add your name so I know who to reply to.');nm.focus();return;}
+      if(!em.value.trim()||!em.checkValidity()){say('Add an email address I can reply to.');em.focus();return;}
+      var need=[['date','Pick a date.'],['link','Add a link to your mixes or Instagram.'],['message','Tell me a bit about the night.']];
+      for(var k=0;k<need.length;k++){var f=form.elements[need[k][0]];if(f&&f.required&&!f.value.trim()){say(need[k][1]);f.focus();return;}}
+      var fd=new FormData(form);
+      fd.append('access_key',FORM_KEY);
+      fd.append('subject',form.getAttribute('data-subject')+nm.value.trim());
+      fd.append('from_name','VALEN website');
+      sendBtn.disabled=true; sendBtn.textContent='Sending…';
+      fetch('https://api.web3forms.com/submit',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){
+        if(d&&d.success){track(form.id==='form2'?'b2b_submit':'booking_submit');form.reset();say('Sent. I’ll reply within 48 hours.');}
+        else{say('That didn’t send. Email valen.jy.qiu@gmail.com directly and I’ll get back to you.');}
+      }).catch(function(){say('That didn’t send. Check your connection, or email valen.jy.qiu@gmail.com directly.');})
+      .then(function(){sendBtn.disabled=false;sendBtn.textContent=label;});
+    });
   });
   document.getElementById('copy').addEventListener('click',function(){
     var btn=this,el=document.getElementById('mail');
