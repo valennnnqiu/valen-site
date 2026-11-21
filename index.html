@@ -391,6 +391,8 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
 .f-logo{width:min(150px,40vw)}
 .f-bot{border-top:0;padding-top:0}
 @media (max-width:860px){.deck .inner,.deck.idle .inner{opacity:1!important;pointer-events:auto!important}.deck.idle{cursor:auto}}
+.b2b-line{margin:-12px 0 0;font-size:15px;color:var(--mute-on-paper)}.b2b-line a{color:var(--ink);text-underline-offset:3px}.b2b-line a:hover{color:var(--flare-ink)}
+.bk .chk{display:flex;align-items:center;gap:12px;font-size:16px;color:var(--paper);cursor:pointer}.bk .chk input{width:20px;height:20px;margin:0;accent-color:var(--sun);flex:none}
 </style>
 </head>
 <body>
@@ -447,7 +449,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
           <h2>Open format</h2>
           <p class="say">I play Top 40, House, Bounce, Hip Hop and UKG for clubs, brand events and parties. I read the room and keep everyone moving.</p>
           <ul class="gl">
-            <li data-date="2026-11-20"><span class="n">IDK Social Bar</span><span class="h">Event</span></li>
+            <li data-date="2026-11-20"><span class="n">IDK Social Bar</span><span class="h">Monthly residency</span></li>
             <li><span class="n">AMPM</span><span class="h">Club</span></li>
             <li><span class="n">NEST</span><span class="h">Club</span></li>
             <li><span class="n">Haidilao DJ Night</span><span class="h">Brand event</span></li>
@@ -456,6 +458,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
             <li data-img="img/friction.jpg"><span class="n">Friction Sundays</span><span class="h">Club</span></li>
           </ul>
           <a class="cue" href="#book" data-type="club">Book a club or event set</a>
+          <p class="b2b-line">DJ and want to B2B? <a href="#book" id="b2b-link">Message me</a></p>
         </div>
       </div>
 
@@ -509,6 +512,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
           <select id="f-budget" name="budget"><option>Under $300</option><option>$300 to $600</option><option>$600 to $1,000</option><option>$1,000+</option><option>Not sure yet</option></select>
         </div>
         <div class="f full"><label class="l" for="f-venue">Venue and city</label><input id="f-venue" name="venue" type="text"></div>
+        <label class="f full chk"><input type="checkbox" name="b2b" id="f-b2b" value="Yes"><span>I’m a DJ and want to B2B</span></label>
         <div class="f full"><label class="l" for="f-msg">Tell me about the night</label><textarea id="f-msg" name="message"></textarea>
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
         <button class="send" type="submit">Send request</button>
@@ -635,6 +639,7 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
     if(a.closest('.gl li')&&/^https?:/.test(h)) return track('click_tickets',{link_url:h});
   });
   document.getElementById('copy').addEventListener('click',function(){track('copy_email');});
+  var b2bl=document.getElementById('b2b-link');if(b2bl)b2bl.addEventListener('click',function(){var c=document.getElementById('f-b2b');if(c)c.checked=true;track('click_b2b');});
   /* booking form: sends through Web3Forms once FORM_KEY is filled in */
   var FORM_KEY='09115eb9-3479-4c16-a078-6aebbc02b67a';
   var form=document.getElementById('form'), sent=document.getElementById('sent'), sendBtn=form.querySelector('.send');
