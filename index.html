@@ -391,10 +391,6 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
 .f-logo{width:min(150px,40vw)}
 .f-bot{border-top:0;padding-top:0}
 @media (max-width:860px){.deck .inner,.deck.idle .inner{opacity:1!important;pointer-events:auto!important}.deck.idle{cursor:auto}}
-.b2b-line{margin:-12px 0 0;font-size:15px;color:var(--mute-on-paper)}.b2b-line a{color:var(--ink);text-underline-offset:3px}.b2b-line a:hover{color:var(--flare-ink)}
-#book{padding-bottom:72px!important}#b2b{padding-block:72px 110px!important}
-.b2b-head{grid-column:1 / span 5;display:flex;flex-direction:column;gap:16px}.b2b-head p{margin:0;max-width:30ch;font-size:19px;line-height:1.4;color:var(--mute-on-paper)}
-@media (max-width:860px){.b2b-head{grid-column:1 / -1}}
 </style>
 </head>
 <body>
@@ -516,22 +512,6 @@ a.cover:hover .sq .blur{transform:rotate(-14deg) translateX(-30%)}
         <div class="f full"><label class="l" for="f-msg">Tell me about the night</label><textarea id="f-msg" name="message" required></textarea>
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
         <button class="send" type="submit">Send request</button>
-        <p class="sent" role="status" hidden></p>
-      </form>
-    </div>
-  </section>
-
-  <!-- B2B -->
-  <section class="bk gut" id="b2b" aria-labelledby="b2bh">
-    <div class="grid">
-      <div class="b2b-head"><h3 id="b2bh">B2B</h3><p>DJ and want to play a set together? Send me a message.</p></div>
-      <form id="form2" novalidate data-subject="B2B request from ">
-        <div class="f"><label class="l" for="g-name">Name</label><input id="g-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="f"><label class="l" for="g-email">Email</label><input id="g-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="f full"><label class="l" for="g-link">Your mixes or Instagram</label><input id="g-link" name="link" type="text" required></div>
-        <div class="f full"><label class="l" for="g-msg">Anything else, optional</label><textarea id="g-msg" name="message"></textarea>
-          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
-        <button class="send" type="submit">Send</button>
         <p class="sent" role="status" hidden></p>
       </form>
     </div>
